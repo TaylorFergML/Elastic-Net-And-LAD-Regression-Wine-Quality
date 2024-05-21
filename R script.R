@@ -202,6 +202,32 @@ MAE(lad_red_predict, red_test$quality)
 # LAD MAE on test set 0.5081048
 # Still better
 
+# Adding a interaction variable between alcohol and volatile acidity
+# these appeared to have the strongest relationship with the high and low ratings
+
+lad_red_2 <- lad(quality ~ . + alcohol:`volatile acidity`, data=red_train)
+
+summary(lad_red_2)
+
+lad_red_predict_2 <- predict(lad_red_2, red_test)
+
+MAE(lad_red_predict_2, red_test$quality)
+
+# LAD MAE on test set 0.5063234
+
+# Plotting residuals to observe patterns
+
+res <- resid(lad_red_2) 
+
+# produce residual vs. fitted plot 
+
+plot(fitted(lad_red_2), res) 
+
+abline(0,0) 
+
+plot(density(res))
+
+# The model still struggles to predict the highest and lowest ratings
 
 
 # White Wine Models
@@ -303,3 +329,15 @@ lad_white_predict <- predict(lad_white, white_test)
 MAE(lad_white_predict, white_test$quality)
 
 # LAD MAE on test set 0.5584366
+
+# Similar to the red wine, I added a interaction function between alcohol and density
+
+lad_white_2 <- lad(quality ~ . + alcohol:density, data=white_train)
+
+summary(lad_white_2)
+
+lad_white_predict_2 <- predict(lad_white_2, white_test)
+
+MAE(lad_white_predict_2, white_test$quality)
+
+# LAD MAE on test set 0.557702
