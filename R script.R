@@ -230,6 +230,7 @@ plot(density(res))
 # The model still struggles to predict the highest and lowest ratings
 
 
+
 # White Wine Models
 # -----------------
 
